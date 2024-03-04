@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <title>Table Card</title>
+    <style>
+        .table-container {
+            margin: 0 auto;
+            width: 50%; /* Adjust width as needed */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 95px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .editable {
+            cursor: pointer;
+        }
+
+        body {
+            background-image: url('your-background-image.jpg'); /* Replace with the correct image path */
+            background-color: #e8f381; /* Set your desired background color */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #000; 
+        }
+    </style>
+</head>
+<body>
+    <div style="background-image: url('./1476.jpg'); background-size: cover; background-repeat: no-repeat; color: #fff; text-align: center; padding: 20px;">
+        <h1 style="color: #2c3e50;">Gold Zakat Calculator</h1>
+    </div>
+    
+
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Gold Karat</th>
+            <th>Purity</th>
+            <th>Gram Price</th>
+            <th>Gold Weight (Gms)</th>
+            <th>Zakat Amount SR</th>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>750.00</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="zakat-amount">0</td>
+        </tr>
+        <tr>
+            <td>24</td>
+            <td>875.00</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="zakat-amount">0</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>916.67</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="zakat-amount">0</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>995.00</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="zakat-amount">0</td>
+        </tr>
+        <tr>
+            <td>23.88</td>
+            <td>1000.00</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="editable" contenteditable="true">0</td>
+            <td class="zakat-amount">0</td>
+        </tr>
+    </table>
+    <div id="total-zakat-amount"></div>
+</div>
+
+<div style="background-image: url('./1476.jpg'); background-size: cover; background-repeat: no-repeat; color: #131111; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%;">
+    <p>&copy; 2024  www.aurify.ae.</p>
+</div>
+
+<script>
+    const calculateZakat = () => {
+        const rows = document.querySelectorAll('tr:not(:first-child)');
+        let totalZakat = 0;
+        rows.forEach(row => {
+            const gramPrice = parseFloat(row.cells[2].textContent);
+            const goldWeight = parseFloat(row.cells[3].textContent);
+            const zakatAmount = 0.75 * gramPrice * goldWeight * 0.025;
+            row.cells[4].textContent = zakatAmount.toFixed(2);
+            totalZakat += zakatAmount;
+        });
+        document.getElementById('total-zakat-amount').textContent = "Your zakath amount is: " + totalZakat.toFixed(2);
+    };
+
+    const editableCells = document.querySelectorAll('.editable');
+    editableCells.forEach(cell => {
+        cell.addEventListener('input', calculateZakat);
+    });
+
+    // Initial calculation
+    calculateZakat();
+</script>
+
+
+
+
+
+
+</body>
+</html>
