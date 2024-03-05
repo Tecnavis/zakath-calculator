@@ -14,7 +14,9 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 95px;
+            margin-top: 55px;
+
+    
         }
         th, td {
             padding: 8px;
@@ -22,7 +24,7 @@
             border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #f2f2f2;
+            background-color:transparent;
         }
         .editable {
             cursor: pointer;
@@ -30,11 +32,12 @@
 
         body {
             background-image: url('your-background-image.jpg'); /* Replace with the correct image path */
-            background-color: #e8f381; /* Set your desired background color */
+            background-color: #4204a0; /* Set your desired background color */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            color: #000; 
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: #fff;
         }
     </style>
 </head>
@@ -46,13 +49,24 @@
 
 
 <div class="table-container">
+    <label for="currency" style="margin-top: 30px;">Select your Currency: </label>
+    <select id="currency" onchange="updateCurrencySymbol()">
+        <option value=" " selected>- Please Select - </option>
+        <option value="BHD">Bahraini Dinar (BHD)</option>
+        <option value="AED">Emirati Dirham (AED)</option>
+        <option value="KWD">Kuwaiti Dinar (KWD)</option>
+        <option value="OMR">Omani Rial (OMR)</option>
+        <option value="QAR">Qatari Riyal (QAR)</option>
+        <option value="SAR">Saudi Riyal (SR)</option>
+        <!-- Add more currency options as needed -->
+    </select>
     <table>
         <tr>
             <th>Gold Karat</th>
             <th>Purity</th>
-            <th>Gram Price</th>
+            <th>Gram Price <span class="currency-symbol"></span></th>
             <th>Gold Weight (Gms)</th>
-            <th>Zakat Amount SR</th>
+            <th>Zakat Amount  <span class="currency-symbol"></span> </th>
         </tr>
         <tr>
             <td>18</td>
@@ -90,7 +104,7 @@
             <td class="zakat-amount">0</td>
         </tr>
     </table>
-    <div id="total-zakat-amount"></div>
+    <div id="total-zakat-amount" style="display: flex;justify-content: center; align-items: center; margin-top: 50px; font-size: larger;font-weight: 600;"></div>
 </div>
 
 <div style="background-image: url('./1476.jpg'); background-size: cover; background-repeat: no-repeat; color: #131111; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%;">
@@ -98,6 +112,20 @@
 </div>
 
 <script>
+    const updateCurrencySymbol = () => {
+        const currencySelect = document.getElementById('currency');
+        const selectedCurrency = currencySelect.value;
+
+        // Update the currency symbol in the table
+        const currencySymbolCells = document.querySelectorAll('.currency-symbol');
+        currencySymbolCells.forEach(cell => {
+            cell.textContent = selectedCurrency;
+        });
+
+        // Recalculate Zakat after changing the currency
+        calculateZakat();
+    };
+
     const calculateZakat = () => {
         const rows = document.querySelectorAll('tr:not(:first-child)');
         let totalZakat = 0;
@@ -108,7 +136,9 @@
             row.cells[4].textContent = zakatAmount.toFixed(2);
             totalZakat += zakatAmount;
         });
-        document.getElementById('total-zakat-amount').textContent = "Your zakath amount is: " + totalZakat.toFixed(2);
+
+        const currencySymbol = document.getElementById('currency').value;
+        document.getElementById('total-zakat-amount').textContent = "Your Zakath Amount is: " + currencySymbol + " " + totalZakat.toFixed(2);
     };
 
     const editableCells = document.querySelectorAll('.editable');
